@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/dsbferris/go-flags"
+	flags "github.com/dsbferris/go-flags/internal"
 )
 
 type EditorOptions struct {
