@@ -824,6 +824,7 @@ func TestIniCliOverrides(t *testing.T) {
 	defer os.Remove(file.Name())
 
 	_, err = file.WriteString("values = 123\n")
+	// TODO Why is error unused?
 	_, err = file.WriteString("values = 456\n")
 
 	if err != nil {
@@ -872,6 +873,7 @@ func TestIniOverrides(t *testing.T) {
 	defer os.Remove(file.Name())
 
 	_, err = file.WriteString("value-with-default = \"ini-value\"\n")
+	// TODO Why is error unused?
 	_, err = file.WriteString("value-with-default-override-cli = \"ini-value\"\n")
 
 	if err != nil {
@@ -912,6 +914,7 @@ func TestIniOverridesFromConfigFlag(t *testing.T) {
 	defer os.Remove(file.Name())
 
 	_, err = file.WriteString("value-with-default = \"ini-value\"\n")
+	// TODO Why is error unused?
 	_, err = file.WriteString("value-with-default-override-cli = \"ini-value\"\n")
 
 	if err != nil {
