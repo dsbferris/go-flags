@@ -1,10 +1,15 @@
+
+default:format test crosscompile
+
 format:
 	gofmt -w -s .
 
-check-cross-compile:
-	./check_crosscompile.sh
-
 test:
 	go test -v ./...
+
+
+crosscompile:
+	./check_crosscompile.sh
+
 
 .PHONY: format test
