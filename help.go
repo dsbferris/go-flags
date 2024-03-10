@@ -66,7 +66,10 @@ func (p *Parser) getAlignmentInfo() alignmentInfo {
 	}
 
 	if ret.terminalColumns <= 0 {
-		ret.terminalColumns = 80
+		ret.terminalColumns = p.DefaultColumns
+		if p.DefaultColumns == 0 {
+			ret.terminalColumns = 80
+		}
 	}
 
 	var prevcmd *Command
@@ -492,6 +495,10 @@ func (p *Parser) WriteHelp(writer io.Writer) {
 
 			fmt.Fprintln(wr)
 		}
+	}
+
+	if p.PrintAdditionalUsageInfo != nil {
+		p.PrintAdditionalUsageInfo(wr)
 	}
 
 	wr.Flush()

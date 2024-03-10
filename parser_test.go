@@ -381,6 +381,35 @@ func TestEnvDefaults(t *testing.T) {
 	}
 }
 
+func TestReturnsErrorForInvalidEnvVarsOnAllParseAttempts(t *testing.T) {
+	oldEnv := EnvSnapshot()
+	defer oldEnv.Restore()
+
+	var opts envDefaultOptions
+	os.Setenv("TEST_T", "invalid")
+
+	parser := NewParser(&opts, None)
+
+	// Call ParseArgs and verify that the error is returned
+	_, err := parser.ParseArgs(nil)
+	if err == nil {
+		t.Fatal("parser did not return error for invalid env var on first call")
+	}
+	if !strings.Contains(err.Error(), "invalid argument for flag `--t'") {
+		t.Fatalf("unexpected error: %s", err.Error())
+	}
+
+	// Call ParseArgs again and verify that the error is still returned
+	_, err = parser.ParseArgs(nil)
+	if err == nil {
+		t.Fatal("parser did not return error for invalid env var on second call")
+	}
+	if !strings.Contains(err.Error(), "invalid argument for flag `--t'") {
+		t.Fatalf("unexpected error: %s", err.Error())
+	}
+
+}
+
 type CustomFlag struct {
 	Value string
 }
@@ -679,4 +708,18 @@ func TestCommandHandler(t *testing.T) {
 	}
 
 	assertStringArray(t, executedArgs, []string{"arg1", "arg2"})
+}
+
+func TestMapOfSlices(t *testing.T) {
+	var opts = struct {
+		M map[string][]string `short:"m"`
+	}{}
+
+	parser := NewParser(&opts, Default&^PrintErrors)
+	_, err := parser.ParseArgs([]string{"cmd", "-m", "a:b", "-m", "a:c", "-m", "d:e"})
+	if err != nil {
+		t.Fatalf("Unexpected parse error: %s", err)
+	}
+	assertStringArray(t, opts.M["a"], []string{"b", "c"})
+	assertStringArray(t, opts.M["d"], []string{"e"})
 }

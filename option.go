@@ -351,6 +351,7 @@ func (option *Option) clearDefault() error {
 			err := option.setDefault(&d)
 
 			if err != nil {
+				option.preventDefault = false
 				return err
 			}
 		}
@@ -508,7 +509,7 @@ func (option *Option) updateDefaultLiteral() {
 	defs := option.Default
 	def := ""
 
-	if len(defs) == 0 && option.canArgument() {
+	if len(defs) == 0 && option.canArgument() && option.field.Type != nil {
 		var showdef bool
 
 		switch option.field.Type.Kind() {
