@@ -14,7 +14,7 @@ func TestUnknownFlags(t *testing.T) {
 	}
 
 	p := NewParser(&opts, 0)
-	args, err := p.ParseArgs(args)
+	_, err := p.ParseArgs(args)
 
 	if err == nil {
 		t.Fatal("Expected error for unknown argument")
