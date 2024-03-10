@@ -297,8 +297,7 @@ func TestCompletion(t *testing.T) {
 	p := NewParser(&completionTestOptions, Default)
 	c := &completion{parser: p}
 
-	for _, tst := range completionTests {
-		test := tst
+	for _, test := range completionTests {
 		t.Run(test.Name, func(t *testing.T) {
 
 			if test.ShowDescriptions {
@@ -320,8 +319,7 @@ func TestCompletion(t *testing.T) {
 }
 
 func TestParserCompletion(t *testing.T) {
-	for _, tst := range completionTests {
-		test := tst
+	for _, test := range completionTests {
 		t.Run(test.Name, func(t *testing.T) {
 			if test.ShowDescriptions {
 				os.Setenv("GO_FLAGS_COMPLETION", "verbose")
