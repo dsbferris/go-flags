@@ -521,7 +521,7 @@ func (i *IniParser) parse(ini *ini) error {
 
 			for _, group := range groups {
 				opt = group.optionByName(inival.Name, func(o *Option, n string) bool {
-					return strings.ToLower(o.tag.Get("ini-name")) == strings.ToLower(n)
+					return strings.EqualFold(o.tag.Get("ini-name"), n)
 				})
 
 				if opt != nil && len(opt.tag.Get("no-ini")) != 0 {
