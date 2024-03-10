@@ -333,6 +333,7 @@ func (option *Option) clearDefault() error {
 	usedDefault := option.Default
 
 	if envKey := option.EnvKeyWithNamespace(); envKey != "" {
+		// TODO Inject _FILE here!
 		if value, ok := os.LookupEnv(envKey); ok {
 			if option.EnvDefaultDelim != "" {
 				usedDefault = strings.Split(value, option.EnvDefaultDelim)
