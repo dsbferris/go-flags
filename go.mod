@@ -1,4 +1,4 @@
-module github.com/jessevdk/go-flags
+module github.com/dsbferris/go-flags
 
 go 1.22.1
 
